@@ -1,5 +1,5 @@
 # Trayify
-A small windows utility to hide and create a tray icon for any program's window.
+A small windows utility to hide and create a tray icon for any program's window. Mostly it is meant to tack on a tray icon to software that doesn't come with one.
 
 ## Installation
 Trayify is strictly a _windows_ utility. You may download the compiled executable or use the script inside a Python environment.
