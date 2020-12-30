@@ -8,7 +8,7 @@ In the latter case, install the required modules like so:
 
 `pip install -r requirements.txt`
 
-## How to run Trayify
+## How to Run Trayify
 There are two ways to run Trayify:
 - Put the script or compiled executable into a directory that contains exactly one executable other than Trayify itself, and run it without any additional arguments.
 - Run Trayify and pass exactly one argument, which should be the path to the executable which you want to use Trayify on.<br/>Example: `\Path\to\Trayify.exe \Path\to\other\exe`
@@ -17,3 +17,6 @@ If you want the tray icon to be something specific, create an `.ico` file of the
 
 ## Behaviour of Trayify
 Trayify will run the target program with its window hidden, and create a tray icon in its place. Either double-clicking or right-clicking the icon and then choosing `Toggle` will bring up and hide the window, respectively. When `Exit` is chosen from the menu, Trayify will attempt to close the program via a `SIGTERM` signal.
+
+## Possible Future Improvements
+Currently, Trayify does not attempt to check the target executable itself for icons. For the sake of simplicity, it would be preferable to just extract the first icon and use that for the tray. If I find a simple way to do this, it will probably get added.
