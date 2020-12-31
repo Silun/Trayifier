@@ -18,9 +18,5 @@ If you want the tray icon to be something specific, create an `.ico` file of the
 ## Behaviour of Trayify
 Trayify will run the target application with its window hidden, and create a tray icon in its place. Either double-clicking or right-clicking the icon and then choosing `Toggle` will bring up and hide the window, respectively. When `Exit` is chosen from the menu, Trayify will attempt to close the application via a `SIGTERM` signal.
 
-## Known Issues
-- If the trayified application closes before Trayify does, it'll generate an error when closing Trayify.
-- Toggling the visibility does not bring the window into focus.
-
 ## Possible Future Improvements
 Currently, Trayify does not attempt to check the target executable itself for icons. For the sake of simplicity, it would be preferable to just extract the first icon and use that for the tray. If I find a simple way to do this, it will probably get added.
