@@ -71,7 +71,8 @@ def find_window_for_pid(pid):
 def change_visibility(hwndlist, bool):
     for hwnd in hwndlist:
         ShowWindow(hwnd, bool)
-        SetForegroundWindow(hwnd)
+        if bool:
+            SetForegroundWindow(hwnd)
     return bool
 
 
