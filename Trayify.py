@@ -1,7 +1,7 @@
 import sys
 from pathlib import WindowsPath
 import subprocess
-from win32gui import EnumWindows, ShowWindow
+from win32gui import EnumWindows, ShowWindow, SetForegroundWindow
 from win32process import GetWindowThreadProcessId
 from os import kill
 from signal import SIGTERM
@@ -40,7 +40,7 @@ def determine_parameters():
         if WindowsPath(sys.argv[1]).exists():
             program = WindowsPath(sys.argv[1])
     elif number_of_arguments > 2:
-        sys.exit('Too many arguments. Run with either no parameters or the path to ONE executable to Trayify.')
+        sys.exit('Error: Too many arguments. Run with either no parameters or the path to ONE executable to Trayify.')
     else:
         cwd = WindowsPath(sys.executable).parent
         local_executables = list(cwd.glob('*.exe'))
@@ -51,7 +51,7 @@ def determine_parameters():
         if len(local_executables) == 1:
             program = local_executables[0]
         else:
-            sys.exit('No path was passed and there is not exactly ONE executable in the directory.')
+            sys.exit('Error: No path was passed and there is not exactly ONE executable in the directory.')
     return program, False
 
 
@@ -71,6 +71,7 @@ def find_window_for_pid(pid):
 def change_visibility(hwndlist, bool):
     for hwnd in hwndlist:
         ShowWindow(hwnd, bool)
+        SetForegroundWindow(hwnd)
     return bool
 
 
@@ -88,9 +89,11 @@ while True:
     event = tray.read()
     print(event)
     if event == 'Exit':
-        # On Exit, gracefully terminate trayified process and end Trayify
-        kill(program_pid, SIGTERM)
-        break
+        # On Exit, attempt to gracefully terminate trayified process and end Trayify
+        try:
+            kill(program_pid, SIGTERM)
+        finally:
+            break
     elif event in ['Toggle', '__DOUBLE_CLICKED__']:
         # On toggle, find all windows associated with pid at the time, then change visibility
         program_hwndlist = find_window_for_pid(program_pid)
