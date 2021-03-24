@@ -3,6 +3,7 @@ from pathlib import WindowsPath
 import subprocess
 from win32gui import EnumWindows, ShowWindow, SetForegroundWindow
 from win32process import GetWindowThreadProcessId
+from win32com.client import Dispatch
 from os import kill
 from signal import SIGTERM
 from base64 import b64encode
@@ -72,6 +73,7 @@ def change_visibility(hwndlist, bool):
     for hwnd in hwndlist:
         ShowWindow(hwnd, bool)
         if bool:
+            shell.SendKeys('%')
             SetForegroundWindow(hwnd)
     return bool
 
@@ -84,6 +86,7 @@ program_pid = startProgram(program_to_trayify, window_is_visible)
 # Define tray menu and icon
 menu_def = ['UNUSED', ['Toggle', 'Exit']]
 tray = sg.SystemTray(menu=menu_def, data_base64=find_icon(program_to_trayify))
+shell = Dispatch("WScript.Shell")
 
 # Main loop
 while True:
