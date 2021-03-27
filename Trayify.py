@@ -74,9 +74,14 @@ def change_visibility(hwndlist, bool):
     for hwnd in hwndlist:
         ShowWindow(hwnd, bool)
         if bool:
-            shell.SendKeys('%')
-            SetForegroundWindow(hwnd)
-            shell.SendKeys('%')
+            # Send keys to workaround an issue in the Windows API.
+            try:
+                shell.SendKeys('%')
+                SetForegroundWindow(hwnd)
+                shell.SendKeys('%')
+            except Exception as e:
+                print("Exception occured on setting window focus. This is a bug in the Windows API.")
+                print(e)
     return bool
 
 
