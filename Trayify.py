@@ -68,7 +68,8 @@ def find_window_for_pid(pid):
     return result
 
 
-# Change the window visibility of the passed list of HWND window handles
+# Change the window visibility of the passed list of HWND window handles and push into foreground
+# SetForegroundWindow() is buggy in Windows, can lead to occasional crashes -> disable to fix
 def change_visibility(hwndlist, bool):
     for hwnd in hwndlist:
         ShowWindow(hwnd, bool)
