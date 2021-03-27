@@ -37,7 +37,7 @@ def startProgram(target, visibility):
 def determine_parameters():
     program = None
     number_of_arguments = len(sys.argv)
-    if number_of_arguments is 2:
+    if number_of_arguments == 2:
         if WindowsPath(sys.argv[1]).exists():
             program = WindowsPath(sys.argv[1])
     elif number_of_arguments > 2:
@@ -75,6 +75,7 @@ def change_visibility(hwndlist, bool):
         if bool:
             shell.SendKeys('%')
             SetForegroundWindow(hwnd)
+            shell.SendKeys('%')
     return bool
 
 
