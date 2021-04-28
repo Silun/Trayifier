@@ -31,7 +31,7 @@ VSVersionInfo(
         [StringStruct(u'CompanyName', u'Bentry Software'),
         StringStruct(u'FileDescription', u'Trayify'),
         StringStruct(u'InternalName', u'Trayify'),
-        StringStruct(u'LegalCopyright', u'© 2020 Bentry Software, file icon by Alex Hovy (CC BY 3.0).'),
+        StringStruct(u'LegalCopyright', u'© 2020 Bentry Software'),
         StringStruct(u'OriginalFilename', u'Trayify.exe'),
         StringStruct(u'ProductName', u'Trayify')])
       ]), 
