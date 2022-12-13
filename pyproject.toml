@@ -22,7 +22,8 @@ dependencies = [
     "pywin32",
     "PySimpleGUIWx",
     "icoextract",
-    #'tomli; python_version < "3.11"',
+    #'tomli; python_version < "3.11"', # uncomment when 3.11 is common
+    "tomli",
 ]
 requires-python = ">=3.6"
 

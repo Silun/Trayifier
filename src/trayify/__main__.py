@@ -127,10 +127,3 @@ def maindbg():
 
 if __name__ == "__main__":
     main()
-
-"""
-todo:
--icon aus der exe auslesen??
--mehrere programme zugleich trayifyen lassen??
--selection box bei direktaufruf?
-"""
