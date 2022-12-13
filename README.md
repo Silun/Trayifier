@@ -8,6 +8,7 @@ You may also download the compiled executable [here.](https://github.com/Silun/T
 
 ## How to Run Trayify
 There are multiple ways to run Trayify:
+- Install Trayify via pip and execute it via `trayify path\to\exe`, either via the terminal or via a shortcut.
 - Put the compiled executable into a directory that contains _exactly one_ executable other than Trayify itself, and run it without any additional arguments. Trayify will then automatically choose that other executable to run.
 - Run Trayify and pass exactly one argument, which should be the path to the executable which you want to use Trayify on.<br/>Example: `\Path\to\Trayify.exe \Path\to\other\exe`
 
