@@ -1,18 +1,19 @@
 import sys
-from pathlib import WindowsPath
+from pathlib import Path
 import subprocess
 from win32gui import EnumWindows, ShowWindow, SetForegroundWindow
 from win32process import GetWindowThreadProcessId
 from win32com.client import Dispatch
-from os import kill
+from os import kill, getpid
 from signal import SIGTERM
 from base64 import b64encode
 import PySimpleGUIWx as sg
-
+import trayify
+import threading
 
 # if icon file exists, encode it to base64. if not, use standard icon
-def find_icon(passedWindowsPath):
-    icon = passedWindowsPath.parent / (str(passedWindowsPath.name).rsplit('.', 1)[0]+".ico")
+def find_icon(passedPath):
+    icon = passedPath.parent / (str(passedPath.name).rsplit('.', 1)[0]+".ico")
     if icon.exists():
         with open(icon, "rb") as image_file:
             icon = b64encode(image_file.read())
@@ -22,7 +23,7 @@ def find_icon(passedWindowsPath):
 
 
 # Starts the program with all of its windows hidden or shown based on initial global value
-def startProgram(target, visibility):
+def start_program(target, visibility):
     rawtarget = r'{}'.format(target)
     SW_HIDE = visibility
     info = subprocess.STARTUPINFO()
@@ -38,22 +39,22 @@ def determine_parameters():
     program = None
     number_of_arguments = len(sys.argv)
     if number_of_arguments == 2:
-        if WindowsPath(sys.argv[1]).exists():
-            program = WindowsPath(sys.argv[1])
+        if Path(sys.argv[1]).exists():
+            program = Path(sys.argv[1])
     elif number_of_arguments > 2:
         sys.exit('Error: Too many arguments. Run with either no parameters or the path to ONE executable to Trayify.')
     else:
-        cwd = WindowsPath(sys.executable).parent
+        cwd = Path(sys.executable).parent
         local_executables = list(cwd.glob('*.exe'))
         try:
-            local_executables.remove(WindowsPath(sys.executable))
+            local_executables.remove(Path(sys.executable))
         except:
             pass
         if len(local_executables) == 1:
             program = local_executables[0]
         else:
             sys.exit('Error: No path was passed and there is not exactly ONE executable in the directory.')
-    return program, False
+    return program, trayify._cfg["defaults"]["visibility"]
 
 
 # Find all windows associated with the passed PID by iterating through all windows and comparing the associated PIDs
@@ -84,34 +85,45 @@ def change_visibility(hwndlist, bool):
                 print(e)
     return bool
 
+def start_trayify():
+    global shell
+    # Set parameters, start trayified program and remember its PID and visibility
+    program_to_trayify, window_is_visible = determine_parameters()
+    program_pid = start_program(program_to_trayify, window_is_visible)
+    # print(program_pid)
+    print(f"Starting {program_to_trayify.name} with PID {program_pid}. The window is {(lambda x: 'not ' if x == False else '')(window_is_visible)}visible by default. The tray process has PID {getpid()}.")
 
-# Set parameters, start trayified program and remember its PID and visibility
-program_to_trayify, window_is_visible = determine_parameters()
-program_pid = startProgram(program_to_trayify, window_is_visible)
+    # Define tray menu and icon
+    menu_def = ['UNUSED', ['Toggle', 'Exit']]
+    tray = sg.SystemTray(menu=menu_def, data_base64=find_icon(program_to_trayify))
+    shell = Dispatch("WScript.Shell")
 
+    # Main loop
+    while True:
+        event = tray.read()
+        print(event)
+        if event == 'Exit':
+            # On Exit, attempt to gracefully terminate trayified process and end Trayify
+            try:
+                kill(program_pid, SIGTERM)
+                print(f"Killing {program_to_trayify.name} with PID {program_pid} via SIGTERM ({SIGTERM}).")
+            finally:
+                break
+        elif event in ['Toggle', '__DOUBLE_CLICKED__']:
+            # On toggle, find all windows associated with pid at the time, then change visibility
+            program_hwndlist = find_window_for_pid(program_pid)
+            window_is_visible = change_visibility(
+                program_hwndlist, not window_is_visible)
 
-# Define tray menu and icon
-menu_def = ['UNUSED', ['Toggle', 'Exit']]
-tray = sg.SystemTray(menu=menu_def, data_base64=find_icon(program_to_trayify))
-shell = Dispatch("WScript.Shell")
+def main():
+    start_trayify()
 
-# Main loop
-while True:
-    event = tray.read()
-    print(event)
-    if event == 'Exit':
-        # On Exit, attempt to gracefully terminate trayified process and end Trayify
-        try:
-            kill(program_pid, SIGTERM)
-        finally:
-            break
-    elif event in ['Toggle', '__DOUBLE_CLICKED__']:
-        # On toggle, find all windows associated with pid at the time, then change visibility
-        program_hwndlist = find_window_for_pid(program_pid)
-        window_is_visible = change_visibility(
-            program_hwndlist, not window_is_visible)
+if __name__ == "__main__":
+    main()
 
-
-# todo:
-# icon aus der exe auslesen??
-# mehrere programme zugleich trayifyen lassen??
+"""
+todo:
+-icon aus der exe auslesen??
+-mehrere programme zugleich trayifyen lassen??
+-selection box bei direktaufruf?
+"""

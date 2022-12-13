@@ -1,3 +1,4 @@
+icoextract
+pysimpleguiwx
 pywin32
-wxPython
-PySimpleGUIWx
+tomli

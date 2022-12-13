@@ -1,0 +1,4 @@
+# config.toml
+
+[defaults]
+visibility = true

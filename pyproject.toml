@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "Trayify"
+version = "1.1.0"
+description = "Hide any program's window and create a tray icon for it."
+readme = "README.md"
+authors = [{ name = "Silun"}]
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Environment :: Win32 (MS Windows)",
+    "Intended Audience :: End Users/Desktop",
+    "Topic :: Desktop Environment",
+]
+keywords = ["tray", "tool", "icon", "tray icon"]
+dependencies = [
+    "pywin32",
+    "PySimpleGUIWx",
+    "icoextract",
+    #'tomli; python_version < "3.11"',
+]
+requires-python = ">=3.6"
+
+[project.urls]
+Homepage = "https://github.com/Silun/Trayify"
+
+# Debug call, currently unused.
+# [project.scripts]
+# trayifydbg = "trayify.__main__:maindbg"
+
+[project.gui-scripts]
+trayify = "trayify.__main__:main"
+
+[tool.bumpver]
+current_version = "1.1.0"
+version_pattern = "MAJOR.MINOR.PATCH"
+commit_message = "bump version {old_version} -> {new_version}"
+commit = false
+tag = false
+push = false
+
+[tool.bumpver.file_patterns]
+"pyproject.toml"= ['current_version = "{version}"', 'version = "{version}"']
+"src/trayify/__init__.py" = ['__version__ = "{version}"']
