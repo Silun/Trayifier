@@ -1,15 +1,19 @@
 import sys
-from pathlib import Path
 import subprocess
+from os import kill, getpid
+from signal import SIGTERM
+
+import pywintypes # Only needs to be imported due to a bug in pywin32
+# https://stackoverflow.com/questions/3956178/cant-load-pywin32-library-win32gui
 from win32gui import EnumWindows, ShowWindow, SetForegroundWindow
 from win32process import GetWindowThreadProcessId
 from win32com.client import Dispatch
-from os import kill, getpid
-from signal import SIGTERM
-from base64 import b64encode
+
 import PySimpleGUIWx as sg
 import trayify
-import threading
+from pathlib import Path
+from base64 import b64encode
+
 
 # if icon file exists, encode it to base64. if not, use standard icon
 def find_icon(passedPath):
@@ -117,6 +121,9 @@ def start_trayify():
 
 def main():
     start_trayify()
+
+def maindbg():
+    main()
 
 if __name__ == "__main__":
     main()

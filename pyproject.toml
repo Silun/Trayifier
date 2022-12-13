@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "Trayify"
-version = "1.1.0"
+version = "1.1.3"
 description = "Hide any program's window and create a tray icon for it."
 readme = "README.md"
 authors = [{ name = "Silun"}]
@@ -30,14 +30,14 @@ requires-python = ">=3.6"
 Homepage = "https://github.com/Silun/Trayify"
 
 # Debug call, currently unused.
-# [project.scripts]
-# trayifydbg = "trayify.__main__:maindbg"
+[project.scripts]
+trayifydbg = "trayify.__main__:maindbg"
 
 [project.gui-scripts]
 trayify = "trayify.__main__:main"
 
 [tool.bumpver]
-current_version = "1.1.0"
+current_version = "1.1.3"
 version_pattern = "MAJOR.MINOR.PATCH"
 commit_message = "bump version {old_version} -> {new_version}"
 commit = false
@@ -45,5 +45,6 @@ tag = false
 push = false
 
 [tool.bumpver.file_patterns]
-"pyproject.toml"= ['current_version = "{version}"', 'version = "{version}"']
+"pyproject.toml" = ['current_version = "{version}"', 'version = "{version}"']
 "src/trayify/__init__.py" = ['__version__ = "{version}"']
+"Trayify_info.txt" = ['filevers=(MAJOR, MINOR, PATCH, 0)']
