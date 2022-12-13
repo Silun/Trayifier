@@ -26,3 +26,4 @@ Trayify will run the target application with and create a tray icon in its place
 - Register trayify as a global command that can be run from anywhere.
 - When run without an argument, bring up a mechanism to choose an already open window to add a tray icon to.
 - Make trayify live inside its own virtual environment.
+- Detect when the window is getting minimized and offer actual minimize-to-tray functionality.
