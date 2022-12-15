@@ -2,13 +2,13 @@
 A small windows utility to hide any application's window and create a tray icon for it. Mostly it is meant to tack on a tray icon and minimize-to-tray function to software that doesn't come with that option.
 
 ## Installation
-Trayify is strictly a _windows_ utility.  It may be installed via pip: `pip install trayify`
+Trayify is strictly a _windows_ utility.  ~~It may be installed via pip: `pip install trayify`~~ Currently it may not be installed via pip as the name is already taken on PyPI.
 
 You may also download the compiled executable [here.](https://github.com/Silun/Trayify/releases/latest/download/Trayify.exe )
 
 ## How to Run Trayify
 There are multiple ways to run Trayify:
-- Install Trayify via pip and execute it via `trayify path\to\exe`, either via the terminal or via a shortcut.
+- ~~Install Trayify via pip and execute it via `trayify path\to\exe`, either via the terminal or via a shortcut.~~
 - Put the compiled executable into a directory that contains _exactly one_ executable other than Trayify itself, and run it without any additional arguments. Trayify will then automatically choose that other executable to run.
 - Run Trayify and pass exactly one argument, which should be the path to the executable which you want to use Trayify on.<br/>Example: `\Path\to\Trayify.exe \Path\to\other\exe`
 
