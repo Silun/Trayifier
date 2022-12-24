@@ -89,7 +89,7 @@ def change_visibility(hwndlist, bool):
                 print(e)
     return bool
 
-def start_trayify():
+def start_trayify(*args, **kwargs):
     global shell
     # Set parameters, start trayified program and remember its PID and visibility
     program_to_trayify, window_is_visible = determine_parameters()
@@ -119,11 +119,11 @@ def start_trayify():
             window_is_visible = change_visibility(
                 program_hwndlist, not window_is_visible)
 
-def main():
+def main(*args, **kwargs):
     start_trayify()
 
 def maindbg():
     main()
 
 if __name__ == "__main__":
-    main()
+    main(r"C:\Windows\System32\notepad.exe") #todo fix
