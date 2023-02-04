@@ -9,4 +9,4 @@ __version__ = "1.2.0"
 
 assert sys.platform == "win32", "Trayify only works on the win32 platform."
 
-_cfg = tomllib.loads(resources.read_text("trayify", "config.toml"))
+_cfg = tomllib.loads(resources.read_text("trayifier", "config.toml"))

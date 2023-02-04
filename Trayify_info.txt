@@ -29,11 +29,11 @@ VSVersionInfo(
       StringTable(
         u'000004b0',
         [StringStruct(u'CompanyName', u'Bentry Software'),
-        StringStruct(u'FileDescription', u'Trayify'),
-        StringStruct(u'InternalName', u'Trayify'),
+        StringStruct(u'FileDescription', u'Trayifier'),
+        StringStruct(u'InternalName', u'Trayifier'),
         StringStruct(u'LegalCopyright', u'© 2023 Bentry Software'),
-        StringStruct(u'OriginalFilename', u'Trayify.exe'),
-        StringStruct(u'ProductName', u'Trayify')])
+        StringStruct(u'OriginalFilename', u'Trayifier.exe'),
+        StringStruct(u'ProductName', u'Trayifier')])
       ]), 
     VarFileInfo([VarStruct(u'Translation', [0, 1200])])
   ]

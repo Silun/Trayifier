@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "Trayify"
+name = "Trayifier"
 version = "1.2.0"
 description = "Hide any program's window and create a tray icon for it."
 readme = "README.md"
@@ -32,10 +32,10 @@ Homepage = "https://github.com/Silun/Trayify"
 
 # Debug call
 [project.scripts]
-trayifydbg = "trayify.__main__:main"
+trayifydbg = "trayifier.__main__:main"
 
 [project.gui-scripts]
-trayify = "trayify.__main__:main"
+trayify = "trayifier.__main__:main"
 
 [tool.bumpver]
 current_version = "1.2.0"
@@ -47,5 +47,5 @@ push = false
 
 [tool.bumpver.file_patterns]
 "pyproject.toml" = ['current_version = "{version}"', 'version = "{version}"']
-"src/trayify/__init__.py" = ['__version__ = "{version}"']
-"Trayify_info.txt" = ['filevers=(MAJOR, MINOR, PATCH, 0)']
+"src/trayifier/__init__.py" = ['__version__ = "{version}"']
+"Trayifier_info.txt" = ['filevers=(MAJOR, MINOR, PATCH, 0)']

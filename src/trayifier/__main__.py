@@ -11,7 +11,7 @@ from win32process import GetWindowThreadProcessId
 from win32com.client import Dispatch
 
 import PySimpleGUIWx as sg
-import trayify
+import trayifier
 from pathlib import Path
 from base64 import b64encode
 from icoextract import IconExtractor
@@ -118,7 +118,7 @@ def start_trayify(args):
     program_to_trayify = determine_filepath(args)
 
     if args.visible == None:
-        window_is_visible = trayify._cfg["defaults"]["visibility"]
+        window_is_visible = trayifier._cfg["defaults"]["visibility"]
     else:
         window_is_visible = args.visible
 
@@ -157,7 +157,7 @@ def main():
                                         "on a tray icon and minimize-to-tray function to software that doesn't " \
                                         "come with that option.",
                                     epilog = 'In order to get debug information printed to the console, use trayifydbg instead of trayify.')
-    parser.add_argument("-v", "--version", action='version', version=f'trayifier {trayify.__version__}')
+    parser.add_argument("-v", "--version", action='version', version=f'trayifier {trayifier.__version__}')
     parser.add_argument('-f', '--filename', required=False, help="if no filepath is specified, trayify will look for a single executable in the current working directory")
     parser.add_argument('--visible', action=argparse.BooleanOptionalAction,
                         default=None, help="override the default initial window visibility")

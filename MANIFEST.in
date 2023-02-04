@@ -1,1 +1,1 @@
-include src/trayify/*.toml
+include src/trayifier/*.toml
