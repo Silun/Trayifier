@@ -5,7 +5,7 @@ try:
 except ModuleNotFoundError:
     import tomli as tomllib
 
-__version__ = "1.1.3"
+__version__ = "1.2.0"
 
 assert sys.platform == "win32", "Trayify only works on the win32 platform."
 
