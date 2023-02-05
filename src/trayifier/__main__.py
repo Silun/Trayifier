@@ -16,11 +16,6 @@ from pathlib import Path
 from base64 import b64encode
 from icoextract import IconExtractor
 
-"""TODOzeug
--pyinstaller funktional machen für standalone exe
--readme anpassen
--pypi upload
-"""
 
 def find_icon(passedPath):
     """Look for an icon file next to the executable and of the same name.
