@@ -1,4 +1,6 @@
 import sys
+from trayifier.__main__ import trayify_from_script as trayify
+from trayifier.__main__ import main as main
 from importlib import resources
 try:
     import tomllib

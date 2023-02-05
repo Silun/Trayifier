@@ -16,6 +16,11 @@ from pathlib import Path
 from base64 import b64encode
 from icoextract import IconExtractor
 
+"""TODOzeug
+-pyinstaller funktional machen für standalone exe
+-readme anpassen
+-pypi upload
+"""
 
 def find_icon(passedPath):
     """Look for an icon file next to the executable and of the same name.
@@ -163,6 +168,20 @@ def main():
                         default=None, help="override the default initial window visibility")
     # parser.add_argument('--verbose', action='store_true', help="TBI outputs extra logging information")
     args = parser.parse_args()
+
+    start_trayify(args)
+
+def trayify_from_script(filepath: Path = None, visibility: bool = True):
+    "A small windows utility to hide any application's " \
+    "window and create a tray icon for it. Mostly it is meant to tack " \
+    "on a tray icon and minimize-to-tray function to software that doesn't " \
+    "come with that option. Point the filepath argument to a file or a folder containing exactly one executable. " \
+    "If no filepath is provided, the current working directory will be used instead. " \
+    "Use the visibility argument to override the default visibility on program launch."
+    args = argparse.Namespace(
+        filename = filepath,
+        visible = visibility
+    )
 
     start_trayify(args)
 
