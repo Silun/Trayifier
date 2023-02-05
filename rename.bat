@@ -1,0 +1,1 @@
+ren .\dist\PyInstallerEntry.exe Trayify.exe

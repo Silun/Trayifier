@@ -9,7 +9,6 @@ dist/
 *.so
 
 # Distribution / packaging
-*.bat
 .Python
 build/
 develop-eggs/
