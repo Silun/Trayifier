@@ -92,7 +92,7 @@ def find_window_for_pid(pid):
     return result
 
 
-def change_visibility(hwndlist, bool):
+def change_visibility(hwndlist, bool, args):
     """Change the window visibility of the passed list of HWND window handles and push into foreground.
     The function SetForegroundWindow() is buggy in Windows, it can lead to occasional crashes - there are
     added shell commands which are intended to alleviate this issue."""
@@ -105,8 +105,9 @@ def change_visibility(hwndlist, bool):
                 SetForegroundWindow(hwnd)
                 shell.SendKeys('%')
             except Exception as e:
-                print("Exception occured on setting window focus. This is a bug in the Windows API.")
-                print(e)
+                if args.verbose == True:
+                    print("Exception occured on setting window focus. This is a bug in the Windows API.")
+                    print(e)
     return bool
 
 def start_trayify(args):
@@ -123,7 +124,8 @@ def start_trayify(args):
         window_is_visible = args.visible
 
     program_handle = start_program(program_to_trayify, window_is_visible)
-    print(f"Starting {program_to_trayify.name} with PID {program_handle.pid}. The window is {(lambda x: 'NOT ' if x == False else '')(window_is_visible)}visible by default. The tray process has PID {getpid()}.")
+    if args.verbose == True:
+        print(f"Starting {program_to_trayify.name} with PID {program_handle.pid}. The window is {(lambda x: 'NOT ' if x == False else '')(window_is_visible)}visible by default. The tray process has PID {getpid()}.")
 
     # Define tray menu, icon and shell
     menu_def = ['UNUSED', ['Toggle', 'Exit']]
@@ -133,21 +135,25 @@ def start_trayify(args):
     # Main loop
     while True:
         event = tray.read()
-        print(event)
+        if args.verbose == True:
+            print(event)
         if event == 'Exit':
             # On Exit, attempt to gracefully terminate trayified process and end Trayify
             try:
                 kill(program_handle.pid, SIGTERM)
-                print(f"Killing {program_to_trayify.name} with PID {program_handle.pid} via SIGTERM ({SIGTERM}).")
+                if args.verbose == True:
+                    print(f"Killing {program_to_trayify.name} with PID {program_handle.pid} via SIGTERM ({SIGTERM}).")
             finally:
                 break
         elif event in ['Toggle', '__DOUBLE_CLICKED__']:
             # On toggle, find all windows associated with pid at the time, then change visibility
             program_hwndlist = find_window_for_pid(program_handle.pid)
             window_is_visible = change_visibility(
-                program_hwndlist, not window_is_visible)
+                program_hwndlist, not window_is_visible, args)
         if program_handle.poll() != None:
-            sys.exit(f"The trayified process with PID {program_handle.pid} has ended. Exiting.")
+            if args.verbose == True:
+                print(f"The trayified process with PID {program_handle.pid} has ended. Exiting.")
+            sys.exit()
 
 
 def main():
@@ -161,12 +167,12 @@ def main():
     parser.add_argument('-f', '--filename', required=False, help="if no filepath is specified, trayify will look for a single executable in the current working directory")
     parser.add_argument('--visible', action=argparse.BooleanOptionalAction,
                         default=None, help="override the default initial window visibility")
-    # parser.add_argument('--verbose', action='store_true', help="TBI outputs extra logging information")
+    parser.add_argument('--verbose', action='store_true', help="print log information")
     args = parser.parse_args()
 
     start_trayify(args)
 
-def trayify_from_script(filepath: Path = None, visibility: bool = True):
+def trayify_from_script(filepath: Path = None, visibility: bool = True, verbosity: bool = False):
     "A small windows utility to hide any application's " \
     "window and create a tray icon for it. Mostly it is meant to tack " \
     "on a tray icon and minimize-to-tray function to software that doesn't " \
@@ -175,7 +181,8 @@ def trayify_from_script(filepath: Path = None, visibility: bool = True):
     "Use the visibility argument to override the default visibility on program launch."
     args = argparse.Namespace(
         filename = filepath,
-        visible = visibility
+        visible = visibility,
+        verbose = verbosity,
     )
 
     start_trayify(args)
