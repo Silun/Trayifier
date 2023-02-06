@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "Trayifier"
-version = "1.2.2"
+version = "1.2.3"
 description = "Hide any program's window and create a tray icon for it."
 readme = "README.md"
 authors = [{ name = "Silun"}]
@@ -38,7 +38,7 @@ trayifydbg = "trayifier.__main__:main"
 trayify = "trayifier.__main__:main"
 
 [tool.bumpver]
-current_version = "1.2.2"
+current_version = "1.2.3"
 version_pattern = "MAJOR.MINOR.PATCH"
 commit_message = "bump version {old_version} -> {new_version}"
 commit = false
