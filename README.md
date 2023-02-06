@@ -4,10 +4,12 @@ A small windows utility to hide any application's window and create a tray icon 
 ## Installation
 Trayifier is strictly a _windows_ utility.  It may be installed via pip for Python 3.6+ via `pip install trayifier`
 
+**A help menu is available via `trayifierdbg -h`**
+
 You may also download a standalone compiled executable [here.](https://github.com/Silun/Trayifier/releases/latest/download/Trayify.exe )
 
 ## How to Run Trayifier
-If Trayifier was installed via pip, two commands will be available: `trayifier` and `trayifierdbg`. The first is silent and non-blocking, the second will stay active on the console and print help & debug information to it. **A help menu is available via `trayifierdbg -h`.**
+If Trayifier was installed via pip, two commands will be available: `trayifier` and `trayifierdbg`. The first is silent and non-blocking, the second will stay active on the console and print help & debug information to it.
 
 There are multiple ways to run Trayifier:
 - Install Trayifier via pip and execute it via `trayify -f path\to\exe`, either via the terminal or via a script or shortcut. This will also work via `trayify -f path\to\directory\with\one\exe` if there is _exactly one_ executable in that directory other than Trayifier itself.
